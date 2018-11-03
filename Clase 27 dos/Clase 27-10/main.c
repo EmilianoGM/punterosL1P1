@@ -23,6 +23,7 @@ int main()
 {
     int opcion;
     LinkedList* listaEmpleados = ll_newLinkedList();
+    int archivoDataCargado = 0;
     do
     {
         opcion = menuPrincipal();
@@ -30,46 +31,114 @@ int main()
         switch(opcion)
         {
             case 1:
-                controller_loadFromText("data.csv", listaEmpleados);
+                if(archivoDataCargado == 0)
+                {
+                    controller_loadFromText("data.csv", listaEmpleados);
+                    archivoDataCargado = 1;
+                } else
+                {
+                    printf("El archivo ya a sido cargado.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 2:
+                if(archivoDataCargado == 0)
+                {
+                    controller_loadFromBinary("dataUno.bin", listaEmpleados);
+                    archivoDataCargado = 1;
+                } else
+                {
+                    printf("El archivo ya a sido cargado.\n");
+                }
+                printf("\n");
+                system("pause");
+                system("cls");
                 break;
             case 3:
-                controller_addEmployee(listaEmpleados);
+                if(archivoDataCargado == 1)
+                {
+                    controller_addEmployee(listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 4:
-                controller_editEmployee(listaEmpleados);
+                if(archivoDataCargado == 1)
+                {
+                    controller_editEmployee(listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 5:
-                controller_removeEmployee(listaEmpleados);
+                if(archivoDataCargado == 1)
+                {
+                    controller_removeEmployee(listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 6:
-                controller_ListEmployee(listaEmpleados);
+                if(archivoDataCargado == 1)
+                {
+                    controller_ListEmployee(listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 7:
-                controller_sortEmployee(listaEmpleados);
+                if(archivoDataCargado == 1)
+                {
+                    controller_sortEmployee(listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
                 printf("\n");
                 system("pause");
                 system("cls");
                 break;
             case 8:
+                if(archivoDataCargado == 1)
+                {
+                    controller_saveAsText("dataUno.csv", listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
+                printf("\n");
+                system("pause");
+                system("cls");
                 break;
             case 9:
+                if(archivoDataCargado == 1)
+                {
+                    controller_saveAsBinary("dataUno.bin", listaEmpleados);
+                } else
+                {
+                    printf("El archivo no ha sido cargado todavia.\n");
+                }
+                printf("\n");
+                system("pause");
+                system("cls");
                 break;
             case 10:
                 break;

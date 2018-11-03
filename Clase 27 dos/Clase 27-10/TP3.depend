@@ -108,3 +108,58 @@
 
 1533133022 c:\users\liliana\desktop\tecnicatura\tp3\win_64\parser.h
 
+1541247308 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\biblioteca.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"Biblioteca.h"
+
+1541247308 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\biblioteca.h
+
+1541252694 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Employee.h"
+
+1541252660 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\employee.h
+
+1541247308 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\menu.c
+	<stdio.h>
+	<stdlib.h>
+	"Biblioteca.h"
+
+1541258430 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\parser.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"LinkedList.h"
+	"Employee.h"
+
+1541247308 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\linkedlist.h
+
+1541260431 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"Biblioteca.h"
+	"LinkedList.h"
+	"Employee.h"
+	"parser.h"
+	"Menu.h"
+
+1541247308 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\parser.h
+
+1541247308 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\menu.h
+
+1541260431 source:c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"Menu.h"
+
+1541247308 c:\users\alumno\desktop\hoy\clase 27 dos\clase 27-10\controller.h
+

@@ -26,8 +26,9 @@ int employee_getSueldo(Employee* this,int* sueldo);
 
 int employee_print(Employee* this);
 
-int employee_compareNombre(Employee* this, Employee* thisDos);
-int employee_compareHorasTrabajadas(Employee* this, Employee* thisDos);
-int employee_compareSueldo(Employee* this, Employee* thisDos);
+int employee_compareId(void* this, void* thisDos);
+int employee_compareNombre(void* this, void* thisDos);
+int employee_compareHorasTrabajadas(void* this, void* thisDos);
+int employee_compareSueldo(void* this, void* thisDos);
 
 #endif // employee_H_INCLUDED

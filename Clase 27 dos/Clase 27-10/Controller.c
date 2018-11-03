@@ -28,11 +28,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
               printf("LEN %d", ll_len(pArrayListEmployee));
             return 0;
         }
-        for(indice = 0; indice < ll_len(pArrayListEmployee); indice++)
-        {
-            pEmployee = ll_get(pArrayListEmployee, indice);
-            employee_print(pEmployee);
-        }
     }
     return -1;
 }
@@ -46,6 +41,20 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
+    FILE* pArchivo;
+      Employee* pEmployee;
+      int indice;
+    if(path != NULL && pArrayListEmployee != NULL)
+    {
+        pArchivo = fopen(path, "rb");
+        if(pArchivo != NULL)
+        {
+            parser_EmployeeFromBinary(pArchivo, pArrayListEmployee);
+            fclose(pArchivo);
+              printf("LEN %d", ll_len(pArrayListEmployee));
+            return 0;
+        }
+    }
     return 1;
 }
 
@@ -239,27 +248,43 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
         switch(opcion)
         {
             case 1:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareId, 1);
                 printf("\nLista de empleados ordenada por Id(menor a mayor).\n");
                 break;
             case 2:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareId, 0);
                 printf("\nLista de empleados ordenada por Id(mayor a menor).\n");
                 break;
             case 3:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareNombre, 1);
                 printf("\nLista de empleados ordenada por nombre(A-Z).\n");
                 break;
             case 4:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareNombre, 0);
                 printf("\nLista de empleados ordenada por nombre(Z-A).\n");
                 break;
             case 5:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareHorasTrabajadas, 1);
                 printf("\nLista de empleados ordenada por cantidad de horas trabajadas(menor a mayor).\n");
                 break;
             case 6:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareHorasTrabajadas, 0);
                 printf("\nLista de empleados ordenada por cantidad de horas trabajadas(mayor a menor).\n");
                 break;
             case 7:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareSueldo, 1);
                 printf("\nLista de empleados ordenada por sueldo(menor a mayor).\n");
                 break;
             case 8:
+                printf("Ordenando...\n");
+                ll_sort(pArrayListEmployee, employee_compareSueldo, 0);
                 printf("\nLista de empleados ordenada por sueldo(mayor a menor).\n");
                 break;
             case 9:
@@ -279,6 +304,24 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
+    FILE* pArchivo = NULL;
+    Employee* auxEmployee = NULL;
+    int indice;
+    if(path != NULL && pArrayListEmployee != NULL)
+    {
+        pArchivo = fopen(path, "w");
+        if(pArchivo != NULL)
+        {
+            fprintf(pArchivo, "%s,%s,%s,%s\n", "id", "nombre", "horasTrabajadas", "sueldo");
+            for(indice = 0; indice < ll_len(pArrayListEmployee); indice++)
+            {
+                auxEmployee = (Employee *)ll_get(pArrayListEmployee, indice);
+                fprintf(pArchivo, "%d,%s,%d,%d\n", auxEmployee->id, auxEmployee->nombre, auxEmployee->horasTrabajadas, auxEmployee->sueldo);
+                //fwrite(pArrayListEmployee, sizeof(Employee), ll_len(pArrayListEmployee), pArchivo);
+            }
+        }
+        fclose(pArchivo);
+    }
     return 1;
 }
 
@@ -291,6 +334,22 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
+    FILE* pArchivo = NULL;
+    Employee* auxEmployee = NULL;
+    int indice;
+    if(path != NULL && pArrayListEmployee != NULL)
+    {
+        pArchivo = fopen(path, "wb");
+        if(pArchivo != NULL)
+        {
+            for(indice = 0; indice < ll_len(pArrayListEmployee); indice++)
+            {
+                auxEmployee = (Employee *)ll_get(pArrayListEmployee, indice);
+                fwrite(auxEmployee, sizeof(Employee), 1, pArchivo);
+            }
+        }
+        fclose(pArchivo);
+    }
     return 1;
 }
 

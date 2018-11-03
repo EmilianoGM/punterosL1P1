@@ -11,7 +11,7 @@
  * \return int
  *
  */
-int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
+int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee)
 {
     Employee* pEmployee = NULL;
     int cantidadDeDatosLeidos;
@@ -47,8 +47,36 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
-int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
+int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
 {
+    Employee* pEmployee = NULL;
+    int cant;
+    if (pFile==NULL)
+    {
+        printf("No se pudo abrir el archivo");
+        exit(1);
+    }
+    while(!feof(pFile))
+    {
+        pEmployee = employee_new();
+        if(pEmployee != NULL)
+        {
+            cant=fread(pEmployee,sizeof(Employee),1,pFile);
+            employee_print(pEmployee);
+            ll_add(pArrayListEmployee, pEmployee);
 
+        if(cant!=1)
+        {
+            if(feof(pFile))
+                break;
+            else
+            {
+                printf("No leyo el ultimo registro");
+                break;
+            }
+        }
+        }
+    }
+    fclose(pFile);
     return 1;
 }

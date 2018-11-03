@@ -124,26 +124,19 @@ int employee_print(Employee* this)
     return -1;
 }
 
-int employee_compareNombre(Employee* this, Employee* thisDos)
+int employee_compareId(void* this, void* thisDos)
 {
     int retorno;
+    Employee* pEmployee = NULL;
+    Employee* pEmployeeDos = NULL;
     if(this != NULL && thisDos != NULL)
     {
-        retorno = strcmp(this->nombre, thisDos->nombre);
-    }
-    return retorno;
-
-}
-
-int employee_compareHorasTrabajadas(Employee* this, Employee* thisDos)
-{
-    int retorno;
-    if(this != NULL && thisDos != NULL)
-    {
-        if(this->horasTrabajadas > thisDos->horasTrabajadas)
+        pEmployee = (Employee*)this;
+        pEmployeeDos = (Employee*)thisDos;
+        if(pEmployee->id > pEmployeeDos->id)
         {
             retorno = 1;
-        } else if(this->horasTrabajadas < thisDos->horasTrabajadas)
+        } else if(pEmployee->id < pEmployeeDos->id)
         {
             retorno = -1;
         } else
@@ -155,15 +148,58 @@ int employee_compareHorasTrabajadas(Employee* this, Employee* thisDos)
     return retorno;
 }
 
-int employee_compareSueldo(Employee* this, Employee* thisDos)
+int employee_compareNombre(void* this, void* thisDos)
 {
     int retorno;
+    Employee* pEmployee = NULL;
+    Employee* pEmployeeDos = NULL;
     if(this != NULL && thisDos != NULL)
     {
-        if(this->sueldo > thisDos->sueldo)
+        pEmployee = (Employee*)this;
+        pEmployeeDos = (Employee*)thisDos;
+        retorno = strcmp(pEmployee->nombre, pEmployeeDos->nombre);
+    }
+    return retorno;
+
+}
+
+int employee_compareHorasTrabajadas(void* this, void* thisDos)
+{
+    int retorno;
+    Employee* pEmployee = NULL;
+    Employee* pEmployeeDos = NULL;
+    if(this != NULL && thisDos != NULL)
+    {
+        pEmployee = (Employee*)this;
+        pEmployeeDos = (Employee*)thisDos;
+        if(pEmployee->horasTrabajadas > pEmployeeDos->horasTrabajadas)
         {
             retorno = 1;
-        } else if(this->sueldo < thisDos->sueldo)
+        } else if(pEmployee->horasTrabajadas < pEmployeeDos->horasTrabajadas)
+        {
+            retorno = -1;
+        } else
+        {
+            retorno = 0;
+        }
+
+    }
+    return retorno;
+}
+
+int employee_compareSueldo(void* this, void* thisDos)
+{
+    int retorno;
+    Employee* pEmployee = NULL;
+    Employee* pEmployeeDos = NULL;
+    if(this != NULL && thisDos != NULL)
+    {
+        pEmployee = (Employee*)this;
+        pEmployeeDos = (Employee*)thisDos;
+        if(pEmployee->sueldo > pEmployeeDos->sueldo)
+        {
+            retorno = 1;
+        } else if(pEmployee->sueldo < pEmployeeDos->sueldo)
         {
             retorno = -1;
         } else
