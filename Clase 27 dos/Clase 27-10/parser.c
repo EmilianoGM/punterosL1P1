@@ -19,7 +19,12 @@ int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee)
     char nombre[128];
     char horasTrabajadas[15];
     char sueldo[15];
-    if(pFile != NULL && pArrayListEmployee != NULL)
+    if (pFile==NULL)
+    {
+        printf("No se pudo abrir el archivo");
+        exit(1);
+    }
+    if(pArrayListEmployee != NULL)
     {
         while(!feof(pFile))
         {
@@ -49,8 +54,10 @@ int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
 {
+    Employee auxEmployee;
     Employee* pEmployee = NULL;
     int cant;
+    int contador = 0;
     if (pFile==NULL)
     {
         printf("No se pudo abrir el archivo");
@@ -58,13 +65,23 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
     }
     while(!feof(pFile))
     {
+        cant=fread(&auxEmployee,sizeof(Employee),1,pFile);
+        if(feof(pFile))
+        {
+            printf("\nFIN DEL ARCHIVO\n");
+            printf("CONTADOR %d", contador);
+            fclose(pFile);
+            return 0;
+        }
+          contador++;
         pEmployee = employee_new();
         if(pEmployee != NULL)
         {
-            cant=fread(pEmployee,sizeof(Employee),1,pFile);
-            employee_print(pEmployee);
+            *pEmployee = auxEmployee;
             ll_add(pArrayListEmployee, pEmployee);
-
+              employee_print(pEmployee);
+        }
+        /*
         if(cant!=1)
         {
             if(feof(pFile))
@@ -75,8 +92,9 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
                 break;
             }
         }
-        }
+        */
     }
     fclose(pFile);
+    printf("CONTADOR %d", contador);
     return 1;
 }

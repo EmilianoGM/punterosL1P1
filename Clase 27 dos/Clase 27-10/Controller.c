@@ -16,8 +16,6 @@
 int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
     FILE* pArchivo;
-      Employee* pEmployee;
-      int indice;
     if(path != NULL && pArrayListEmployee != NULL)
     {
         pArchivo = fopen(path, "r");
@@ -42,16 +40,16 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
     FILE* pArchivo;
-      Employee* pEmployee;
-      int indice;
     if(path != NULL && pArrayListEmployee != NULL)
     {
-        pArchivo = fopen(path, "rb");
-        if(pArchivo != NULL)
+        if((pArchivo=fopen(path, "rb")) == NULL)
+        {
+            printf("El archivo binario no ha sido creado todavia\n");
+        } else
         {
             parser_EmployeeFromBinary(pArchivo, pArrayListEmployee);
             fclose(pArchivo);
-              printf("LEN %d", ll_len(pArrayListEmployee));
+            printf("LEN %d", ll_len(pArrayListEmployee));
             return 0;
         }
     }
@@ -123,6 +121,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
         }
         if(flag == 1)
         {
+            printf("%5s | %15s | %16s | %6s\n", "Id", "Nombre", "Horas trabajadas", "Sueldo");
             employee_print(pEmployee);
             printf("\n");
             opcion = menuEditEmployee();
@@ -171,6 +170,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     int id_aBuscar;
     int id;
     Employee* pEmployee;
+    Employee* pAuxEmployee;
     char respuesta;
     int indice;
     int flag = 0;
@@ -190,11 +190,13 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
         }
         if(flag == 1)
         {
+            printf("%5s | %15s | %16s | %6s\n", "Id", "Nombre", "Horas trabajadas", "Sueldo");
             employee_print(pEmployee);
             respuesta = pedirRespuestaSN("\n¿Desea eliminar empleado?(s para si / n para no):\n");
             if(respuesta == 's')
             {
-                ll_remove(pArrayListEmployee, indice);
+                pAuxEmployee = ll_pop(pArrayListEmployee, indice);
+                employee_delete(pAuxEmployee);
                 printf("\nEmpleado eliminado.\n");
             } else
             {
@@ -222,6 +224,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
     int indice;
     if(pArrayListEmployee != NULL)
     {
+        printf("%5s | %15s | %16s | %6s\n", "Id", "Nombre", "Horas trabajadas", "Sueldo");
         for(indice = 0; indice < ll_len(pArrayListEmployee); indice++)
         {
                 pEmployee = ll_get(pArrayListEmployee, indice);
@@ -242,55 +245,60 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
     int opcion;
+    LinkedList* pAuxListEmployee;
     if(pArrayListEmployee != NULL)
     {
+        pAuxListEmployee = ll_clone(pArrayListEmployee);
         opcion = menuSortEmployee();
         switch(opcion)
         {
             case 1:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareId, 1);
-                printf("\nLista de empleados ordenada por Id(menor a mayor).\n");
+                ll_sort(pAuxListEmployee, employee_compareId, 0);
+                printf("\nLista de empleados ordenada por Id(mayor a menor).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 2:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareId, 0);
-                printf("\nLista de empleados ordenada por Id(mayor a menor).\n");
+                ll_sort(pAuxListEmployee, employee_compareNombre, 1);
+                printf("\nLista de empleados ordenada por nombre(A-Z).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 3:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareNombre, 1);
-                printf("\nLista de empleados ordenada por nombre(A-Z).\n");
+                ll_sort(pAuxListEmployee, employee_compareNombre, 0);
+                printf("\nLista de empleados ordenada por nombre(Z-A).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 4:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareNombre, 0);
-                printf("\nLista de empleados ordenada por nombre(Z-A).\n");
+                ll_sort(pAuxListEmployee, employee_compareHorasTrabajadas, 1);
+                printf("\nLista de empleados ordenada por cantidad de horas trabajadas(menor a mayor).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 5:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareHorasTrabajadas, 1);
-                printf("\nLista de empleados ordenada por cantidad de horas trabajadas(menor a mayor).\n");
+                ll_sort(pAuxListEmployee, employee_compareHorasTrabajadas, 0);
+                printf("\nLista de empleados ordenada por cantidad de horas trabajadas(mayor a menor).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 6:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareHorasTrabajadas, 0);
-                printf("\nLista de empleados ordenada por cantidad de horas trabajadas(mayor a menor).\n");
+                ll_sort(pAuxListEmployee, employee_compareSueldo, 1);
+                printf("\nLista de empleados ordenada por sueldo(menor a mayor).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 7:
                 printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareSueldo, 1);
-                printf("\nLista de empleados ordenada por sueldo(menor a mayor).\n");
+                ll_sort(pAuxListEmployee, employee_compareSueldo, 0);
+                printf("\nLista de empleados ordenada por sueldo(mayor a menor).\n\n");
+                controller_ListEmployee(pAuxListEmployee);
                 break;
             case 8:
-                printf("Ordenando...\n");
-                ll_sort(pArrayListEmployee, employee_compareSueldo, 0);
-                printf("\nLista de empleados ordenada por sueldo(mayor a menor).\n");
-                break;
-            case 9:
                 printf("\nLista no ordenada.\n");
                 break;
         }
+        ll_deleteLinkedList(pAuxListEmployee);
     }
     return 1;
 }
@@ -345,6 +353,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
             for(indice = 0; indice < ll_len(pArrayListEmployee); indice++)
             {
                 auxEmployee = (Employee *)ll_get(pArrayListEmployee, indice);
+                printf("INDICE %d", indice);
                 fwrite(auxEmployee, sizeof(Employee), 1, pArchivo);
             }
         }

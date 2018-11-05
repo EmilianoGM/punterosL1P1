@@ -26,6 +26,7 @@ int main()
     int archivoDataCargado = 0;
     do
     {
+        printf("BIENVENIDO\n");
         opcion = menuPrincipal();
         system("cls");
         switch(opcion)
@@ -33,7 +34,7 @@ int main()
             case 1:
                 if(archivoDataCargado == 0)
                 {
-                    controller_loadFromText("data.csv", listaEmpleados);
+                    controller_loadFromText("dataUno.csv", listaEmpleados);
                     archivoDataCargado = 1;
                 } else
                 {
@@ -46,8 +47,10 @@ int main()
             case 2:
                 if(archivoDataCargado == 0)
                 {
-                    controller_loadFromBinary("dataUno.bin", listaEmpleados);
-                    archivoDataCargado = 1;
+                    if((controller_loadFromBinary("dataUno.bin", listaEmpleados)) == 0)
+                    {
+                        archivoDataCargado = 1;
+                    }
                 } else
                 {
                     printf("El archivo ya a sido cargado.\n");
@@ -71,6 +74,7 @@ int main()
             case 4:
                 if(archivoDataCargado == 1)
                 {
+                    printf("MODIFICAR EMPLEADO\n");
                     controller_editEmployee(listaEmpleados);
                 } else
                 {
@@ -83,6 +87,7 @@ int main()
             case 5:
                 if(archivoDataCargado == 1)
                 {
+                    printf("BAJA EMPLEADO\n");
                     controller_removeEmployee(listaEmpleados);
                 } else
                 {
@@ -95,6 +100,7 @@ int main()
             case 6:
                 if(archivoDataCargado == 1)
                 {
+                    printf("LISTAR EMPLEADOS\n\n");
                     controller_ListEmployee(listaEmpleados);
                 } else
                 {
@@ -107,6 +113,7 @@ int main()
             case 7:
                 if(archivoDataCargado == 1)
                 {
+                    printf("ORDENAR EMPLEADOS\n");
                     controller_sortEmployee(listaEmpleados);
                 } else
                 {

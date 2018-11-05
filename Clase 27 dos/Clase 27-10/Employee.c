@@ -34,6 +34,14 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
     return pEmployee;
 }
 
+void employee_delete(Employee* this)
+{
+    if(this != NULL)
+    {
+        free(this);
+    }
+}
+
 int employee_setId(Employee* this,int id)
 {
     if(this != NULL)
@@ -118,7 +126,7 @@ int employee_print(Employee* this)
 {
     if(this != NULL)
     {
-        printf("%5d | %15s | %4d | %6d\n", this->id, this->nombre, this->horasTrabajadas, this->sueldo);
+        printf("%5d | %15s | %16d | %6d\n", this->id, this->nombre, this->horasTrabajadas, this->sueldo);
         return 0;
     }
     return -1;
