@@ -8,6 +8,6 @@ int comprobarStringNumericoPositivo(char cadenaNumerica[], int tamanio);
 
 int comprobarArrayNumericaEntero(char cadenaNumerica[], int tamanio);
 
-char pedirRespuestaSN(char mensaje[]);
+int comprobarStringSoloLetras(char stringLetras[], int tamanio);
 
-int capitalizarArrayLetras(char arrayLetras[]);
+char pedirRespuestaSN(char mensaje[]);

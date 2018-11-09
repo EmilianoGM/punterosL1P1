@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "LinkedList.h"
 #include "Employee.h"
+#include "Biblioteca.h"
 
 /** \brief Parsea los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -34,7 +35,6 @@ int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee)
                 pEmployee = employee_newParametros(id, nombre, horasTrabajadas, sueldo);
                 if(pEmployee != NULL)
                 {
-                    employee_print(pEmployee);
                     ll_add(pArrayListEmployee, pEmployee);
                 }
             }
@@ -58,6 +58,7 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
     Employee* pEmployee = NULL;
     int cant;
     int contador = 0;
+    int datoIncorrecto = 0;
     if (pFile==NULL)
     {
         printf("No se pudo abrir el archivo");
@@ -66,6 +67,7 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
     while(!feof(pFile))
     {
         cant=fread(&auxEmployee,sizeof(Employee),1,pFile);
+        contador++;
         if(feof(pFile))
         {
             printf("\nFIN DEL ARCHIVO\n");
@@ -73,13 +75,19 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee)
             fclose(pFile);
             return 0;
         }
-          contador++;
-        pEmployee = employee_new();
-        if(pEmployee != NULL)
+        if(auxEmployee.id < 0 || comprobarStringSoloLetras(auxEmployee.nombre, 128) != 1 || auxEmployee.horasTrabajadas < 0 || auxEmployee.sueldo < 0)
         {
-            *pEmployee = auxEmployee;
-            ll_add(pArrayListEmployee, pEmployee);
-              employee_print(pEmployee);
+            datoIncorrecto = 0;
+        }
+        if(datoIncorrecto == 0)
+        {
+            pEmployee = employee_new();
+            if(pEmployee != NULL)
+            {
+                *pEmployee = auxEmployee;
+                ll_add(pArrayListEmployee, pEmployee);
+                employee_print(pEmployee);
+            }
         }
         /*
         if(cant!=1)
