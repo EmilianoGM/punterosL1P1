@@ -10,8 +10,8 @@ void manejador(void (*pFuncion)(int), int);
 
 int main()
 {
-    /*manejador(hacerAlgo,75);
-    manejador(mostrar,75);*/
+    manejador(hacerAlgo,75);
+    //manejador(mostrar,75);*/
 
     void (*array[2])(int);
 
